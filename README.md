@@ -1,10 +1,10 @@
 
 # All In One Productivity (AIOP)
 
-Welcome to **All In One Productivity (AIOP)**, the ultimate tool designed to enhance your productivity by providing a customizable, cross-platform, and extensible workspace. This app is perfect for individuals looking to streamline their workflow and boost efficiency.
+Welcome to **All In One Productivity (AIOP)**, the ultimate tool designed to enhance your productivity by providing a customizable, cross-platform, and extensible workspace.
 
 ## Who is this for?
-This app is made for people who want to keep 
+This app is perfect for individuals looking to streamline their workflow and boost efficiency.
 
 ## Features
 - **Customizability**: Create your own themes or choose from our presets to match your style.
@@ -26,6 +26,7 @@ This app is made for people who want to keep
 This app is built with Tauri, ReactJS & Rust
 
 ## Installation
+(Windows)
 Download the latest release of the app <a href="https://github.com/PrintN/All-In-One-Productivity/releases">here</a>
 
 ## For developers
