@@ -1,7 +1,7 @@
 
-# All In One Productivity (AIOP)
+# All In One Productivity
 
-Welcome to **All In One Productivity (AIOP)**, the ultimate tool designed to enhance your productivity by providing a customizable, cross-platform, and extensible workspace.
+Welcome to **All In One Productivity**, the ultimate tool designed to enhance your productivity by providing a customizable, cross-platform, and extensible workspace.
 
 ## Who is this for?
 This app is perfect for individuals looking to streamline their workflow and boost efficiency.
