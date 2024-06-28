@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-primary-color {
+    background-color: var(--titlebar-background-color);
+  }
+  .bg-secondary-color {
+    background-color: var(--sidebar-color);
+  }
+  .bg-background-color {
+    background-color: var(--background-color);
+  }
+  .text-text-color {
+    color: var(--text-color);
+  }
+  .bg-sec-sidebar-color {
+    background-color: var(--secondary-sidebar-color);
+  }
+  .extension-icon-color {
+    color: var(--extension-icon-color);
+  }
+  .font-family {
+    font-family: var(--font-family);
+  }
+}
+html {
+  @apply w-screen h-screen;
+  font-family: var(--font-family);
+}
+
+.theme-light {
+  @apply bg-background-color text-text-color font-family;
+}
+
+.theme-dark {
+  @apply bg-background-color text-text-color font-family;
+}
+
+.theme-red {
+  @apply bg-background-color text-text-color font-family;
+}
+
+.theme-yellow {
+  @apply bg-background-color text-text-color font-family;
+}
+
+.bg-darken {
+  background-color: var(--sidebar-color);
+}
+
+.source-item .source-codes {
+  @apply pl-4 relative;
+}
+
+.source-item-active {
+  @apply bg-background-color text-text-color;
+}
+.source-item {
+  color: var(--text-color);
+}
+.soure-item {
+  color: var(--text-color);
+}
+.source-item .source-codes:before {
+  content: "";
+  @apply absolute top-0 bottom-0 border-l border-dotted border-stone-500;
+}
+
+.inp {
+  @apply block w-full rounded-md outline-none shadow-sm sm:text-sm;
+  @apply px-2 py-0.5;
+}
+
+#titlebar {
+  @apply flex items-center justify-between pl-2;
+  background: var(--titlebar-background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+#titlebar .flex span {
+  color: var(--text-color);
+}
+.titlebar-actions {
+  @apply flex items-center;
+}
+
+.titlebar-icon {
+  @apply py-0.5 cursor-pointer;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.titlebar-icon:hover {
+  background-color: var(--accent-color);
+}
+
+#ttb-close:hover {
+  color: #ffff;
+  background-color: #ff0000;
+}
+
+#editor {
+  padding-top: 27px;
+}
+
+.project-explorer {
+  @apply w-full text-left uppercase text-gray-400 text-xs;
+}
+
+.code-structure {
+  @apply px-2 overflow-y-auto;
+  height: calc(100vh - 70px);
+}
+
+/* Styles for scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #465056;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Secondary Sidebar */
+.secondary-sidebar {
+  padding-inline: 20px;
+  background-color: var(--secondary-sidebar-color);
+}
+.sidebar-icon i {
+  font-size: 20px;
+  color: var(--extension-icon-color);
+}
+.active-extension {
+  border-bottom: 2px solid white;
+}
+
+/* FullCalendar styles */
+.fc .fc-toolbar {
+  background: #333;
+  color: white;
+  border: none;
+}
+
+.fc .fc-daygrid-day {
+  background: #444;
+  color: white;
+  border: 1px solid #555;
+}
+
+.fc .fc-daygrid-day:hover {
+  background: #555;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background: #666;
+}
+
+/* Code Area */
+#code-area {
+  background-color: var(--background-color);
+}
+
