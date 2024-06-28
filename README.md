@@ -1,4 +1,3 @@
-
 # All In One Productivity
 
 Welcome to **All In One Productivity**, the ultimate tool designed to enhance your productivity by providing a customizable, cross-platform, and extensible workspace.
@@ -27,7 +26,14 @@ This app is built with Tauri, ReactJS & Rust
 
 ## Installation
 (Windows)
-Download the latest release of the app <a href="https://github.com/PrintN/All-In-One-Productivity/releases">here</a>
+Download the latest release of the app <a href="https://github.com/PrintN/All-In-One-Productivity/releases">here</a> or build it yourself from the source code:
+- Install Rust: https://www.rust-lang.org/tools/install 
+- Install NodeJS: https://nodejs.org
+- `git clone https://github.com/PrintN/All-In-One-Productivity`
+- `cd All-In-One-Productivity`
+- `npm install && npm run tauri build`
+  
+Then you can find the app in `./src-tauri/target/release` folder.
 
 ## For developers
 Use the <a href="https://printn.github.io/All-In-One-Productivity-Web" target="_blank">documentation</a> to develop extensions for All In One Productivity.
