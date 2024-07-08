@@ -36,4 +36,4 @@ Download the latest release of the app <a href="https://github.com/PrintN/All-In
 Then you can find the app in `./src-tauri/target/release` folder.
 
 ## For developers
-Use the <a href="https://printn.github.io/All-In-One-Productivity-Web" target="_blank">documentation</a> to develop extensions for All In One Productivity.
+Use the <a href="https://printn.github.io/All-In-One-Productivity-Web/doc.html" target="_blank">documentation</a> to get started developing extensions for All In One Productivity.
