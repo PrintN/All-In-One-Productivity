@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext"; // Import ThemeContext
+import { CSSProperties } from "react";
 
 interface SettingsOverlayProps {
   onClose: () => void;
@@ -210,10 +211,10 @@ export default function SettingsOverlay({ onClose }: SettingsOverlayProps) {
   };
 
   // Dynamic styles for the overlay content
-  const tabContentStyles = {
+  const tabContentStyles: CSSProperties = {
     width: "82%", // Adjusted width to accommodate tabs on the left
     maxHeight: "calc(100vh - 160px)", // Max height based on viewport height minus header and padding
-    overflowY: "auto", // Enable vertical scroll if content exceeds height
+    overflowY: "auto" as 'auto', // Enable vertical scroll if content exceeds height
     padding: "0 20px", // Adjust padding as needed
   };
 
