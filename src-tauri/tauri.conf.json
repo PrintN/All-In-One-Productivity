@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "All in One Productivity",
+    "productName": "All In One Productivity",
     "version": "0.0.1"
   },
   "tauri": {

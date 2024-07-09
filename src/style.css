@@ -51,7 +51,7 @@ html {
 }
 
 .source-item .source-codes {
-  @apply pl-4 relative;
+  @apply pl-7 relative;
 }
 
 .source-item-active {

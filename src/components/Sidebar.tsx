@@ -21,15 +21,17 @@ export default function Sidebar() {
     const savedProjectName = localStorage.getItem("projectName");
     if (savedProjectName) {
       setProjectName(savedProjectName);
-      readDirectory(savedProjectName + '/').then(files => {
-        setFiles(files);
-      });
+      setFiles([]); 
+      loadFiles(savedProjectName);
     }
-  }, []);
+  }, [projectName]); 
 
-  const refreshFiles = () => {
-    readDirectory(projectName + '/').then(files => {
+  const loadFiles = (folderPath: string) => {
+    readDirectory(folderPath + '/').then(files => {
       setFiles(files);
+    }).catch(error => {
+      console.error("Error loading files:", error);
+      setFiles([]);
     });
   };
 
@@ -41,17 +43,12 @@ export default function Sidebar() {
     if (!selected || typeof selected !== 'string') return;
   
     localStorage.setItem("projectName", selected);
-    setProjectName(extractFolderName(selected));
-    readDirectory(selected + '/').then(files => {
-      setFiles(files);
-    });
-  };  
-
-  const extractFolderName = (path: string): string => {
-    const parts = path.split(/[\\/]/);
-    return parts.pop() || '';
+    setProjectName(selected);
+    setFiles([]);
+  
+    loadFiles(selected);
   };
-
+  
   const onMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setIsResizing(true);
   };
@@ -127,7 +124,7 @@ export default function Sidebar() {
           <button className="project-explorer" onClick={loadFile}>File explorer</button>
         </div>
         <div className="code-structure">
-          <NavFolderItem file={{ id: "main-folder", name: projectName, path: projectName, kind: 'directory', modified: false }} active={false} refreshFiles={refreshFiles} depth={0} />
+          <NavFolderItem key={projectName} file={{ id: "main-folder", name: projectName, path: projectName, kind: 'directory', modified: false }} active={false} depth={0} />
         </div>
         <div
           onMouseDown={onMouseDown}
@@ -145,10 +142,10 @@ interface ExtensionInfo {
   author: string;
   creationDate: string;
   version: string;
-  iconClass: string; // The class name for the Remixicon
+  iconClass: string;
 }
 
 interface ActivatedExtension extends ExtensionInfo {
   isActive: boolean;
-  key: string; // Unique key for each activated extension
+  key: string;
 }

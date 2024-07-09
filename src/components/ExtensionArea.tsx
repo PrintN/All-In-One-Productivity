@@ -20,6 +20,7 @@ const CodeArea: React.FC = () => {
   const [hoveredFileId, setHoveredFileId] = useState<string | null>(null);
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
   const extensionComponentRef = useRef<HTMLDivElement>(null);
+  const currentExtension = localStorage.getItem('currentExtension') || '';
 
   useEffect(() => {
     const initializedFiles = opened.map((id) => getFileObject(id) as IFile);
@@ -66,12 +67,13 @@ const CodeArea: React.FC = () => {
 
   useEffect(() => {
     if (htmlContent && extensionComponentRef.current) {
-      const iframe = document.createElement('iframe');
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      iframe.style.border = 'none';
+      const iframe = document.createElement("iframe");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+
       if (extensionComponentRef.current) {
-        extensionComponentRef.current.innerHTML = '';
+        extensionComponentRef.current.innerHTML = "";
         extensionComponentRef.current.appendChild(iframe);
       }
 
@@ -81,10 +83,33 @@ const CodeArea: React.FC = () => {
         iframeDoc.write(htmlContent);
         iframeDoc.close();
       }
+
+      window.addEventListener("message", (event) => {
+        if (event.data.type === "TAURI_INVOKE") {
+          invoke(event.data.command, event.data.payload)
+            .then((response) => {
+              iframe.contentWindow?.postMessage(
+                { type: "TAURI_INVOKE_RESPONSE", response },
+                "*"
+              );
+            })
+            .catch((error) => {
+              iframe.contentWindow?.postMessage(
+                { type: "TAURI_INVOKE_ERROR", error },
+                "*"
+              );
+            });
+        }
+      });
     }
   }, [htmlContent]);
 
   const onSelectItem = (id: string) => {
+    if (currentExtension !== "Text Editor" && currentExtension !== "Photo Editor") {
+      console.log("Cannot open tab because current extension is:", currentExtension);
+      return; // Exit early if currentExtension is not Text Editor or Photo Editor
+    }
+
     setSelect(id);
   };
 
@@ -123,14 +148,25 @@ const CodeArea: React.FC = () => {
     setHoveredFileId(null);
   };
 
-  return (
-    <div id="code-area" className="w-full h-full">
-      <div
-        ref={scrollRef}
-        className="code-tab-items flex items-center border-b border-stone-800 divide-x divide-stone-800 overflow-x-auto"
-      >
-        {files.map((file) => {
-          const active = selected === file.id ? "bg-darken text-gray-400" : "";
+// Filter files based on currentExtension
+const filteredFiles = files.filter(file => {
+  if (currentExtension === "Photo Editor" && isImage(file.name)) {
+    return true;
+  }
+  if (currentExtension === "Text Editor" && !isImage(file.name)) {
+    return true;
+  }
+  return false;
+});
+
+return (
+  <div id="code-area" className="w-full h-full">
+    <div
+      ref={scrollRef}
+      className="code-tab-items flex items-center border-b border-stone-800 divide-x divide-stone-800 overflow-x-auto"
+    >
+      {filteredFiles.map((file) => {
+        const active = selected === file.id ? "bg-darken text-gray-400" : "";
 
           return (
             <div
@@ -159,15 +195,16 @@ const CodeArea: React.FC = () => {
               )}
             </div>
           );
-        })}
-      </div>
+      })}
+    </div>
       <div className="code-contents">
         {selected === "photo" && <PhotoEditor />}
         {selected === "calendar" && <Calendar />}
         {selected === "extensions" && <Extensions />}
         {opened.map((item) => {
           const file = getFileObject(item) as IFile;
-          if (isImage(file.name)) {
+          if (!file) return null; // Ensure file is defined
+          if (currentExtension === "Photo Editor" && isImage(file.name)) {
             return (
               <PreviewImage
                 key={file.id}
@@ -175,16 +212,18 @@ const CodeArea: React.FC = () => {
                 active={item === selected}
               />
             );
+          } else if (currentExtension === "Text Editor" && !isImage(file.name)) {
+            return (
+              <CodeEditor
+                key={file.id}
+                id={file.id}
+                active={file.id === selected}
+                onChange={() => handleFileChange(file.id)}
+                onSave={() => handleFileSave(file.id)}
+              />
+            );
           }
-          return (
-            <CodeEditor
-              key={file.id}
-              id={file.id}
-              active={file.id === selected}
-              onChange={() => handleFileChange(file.id)}
-              onSave={() => handleFileSave(file.id)}
-            />
-          );
+          return null; // Explicitly return null if neither condition is met
         })}
       </div>
       {selected && selected.startsWith("extension.") && htmlContent && (

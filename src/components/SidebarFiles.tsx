@@ -9,11 +9,10 @@ import Modal from "../sidebar-files/Modal";
 interface Props {
   files: IFile[];
   visible: boolean;
-  refreshFiles: () => void;
-  depth: number; // Add depth prop
+  depth: number;
 }
 
-export default function NavFiles({ files, visible, refreshFiles, depth }: Props) {
+export default function NavFiles({ files, visible, depth }: Props) {
   const { setSelect, selected, addOpenedFile } = useSource();
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; file: IFile | null }>({ x: 0, y: 0, file: null });
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -39,7 +38,6 @@ export default function NavFiles({ files, visible, refreshFiles, depth }: Props)
       await invoke("delete_file", { args: { path: contextMenu.file.path } });
       setContextMenu({ x: 0, y: 0, file: null });
       setIsModalVisible(false);
-      refreshFiles();
     }
   };
 
@@ -49,7 +47,7 @@ export default function NavFiles({ files, visible, refreshFiles, depth }: Props)
         const isSelected = file.id === selected;
 
         if (file.kind === "directory") {
-          return <NavFolderItem active={isSelected} key={file.id} file={file} refreshFiles={refreshFiles} depth={depth + 1} />;
+          return <NavFolderItem active={isSelected} key={file.id} file={file} depth={depth + 1} />;
         }
 
         return (
@@ -57,7 +55,7 @@ export default function NavFiles({ files, visible, refreshFiles, depth }: Props)
             onClick={(ev) => onShow(ev, file)}
             onContextMenu={(ev) => onContextMenu(ev, file)}
             key={file.id}
-            style={{ paddingLeft: `${depth * 10}px` }} // Indent based on depth
+            style={{ paddingLeft: `${depth * 5}px` }}
             className={`source-item ${isSelected ? "source-item-active" : ""} flex items-center gap-2 px-2 py-0.5 var(--text-color) cursor-pointer`}
           >
             <FileIcon name={file.name} />

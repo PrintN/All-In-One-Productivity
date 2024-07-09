@@ -93,9 +93,8 @@ fn greet(name: &str) -> String {
 }
 
 #[command]
-fn open_folder(folder_path: &str) -> String {
-    let files = helper::read_directory(folder_path);
-    files
+fn open_folder(folder_path: &str) -> Result<String, String> {
+    helper::read_directory(folder_path)
 }
 
 #[command]
