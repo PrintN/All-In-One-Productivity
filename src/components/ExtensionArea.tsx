@@ -9,7 +9,6 @@ import { useSource } from "../context/SourceContext";
 import { getFileObject } from "../sidebar-files/file";
 import FileIcon from "./FileIcon";
 import useHorizontalScroll from "../sidebar-files/useHorizontalScroll";
-import PreviewImage from "./PreviewImage";
 import { invoke } from '@tauri-apps/api/tauri';
 import { localDataDir } from '@tauri-apps/api/path';
 
@@ -198,7 +197,6 @@ return (
       })}
     </div>
       <div className="code-contents">
-        {selected === "photo" && <PhotoEditor />}
         {selected === "calendar" && <Calendar />}
         {selected === "extensions" && <Extensions />}
         {opened.map((item) => {
@@ -206,7 +204,7 @@ return (
           if (!file) return null; // Ensure file is defined
           if (currentExtension === "Photo Editor" && isImage(file.name)) {
             return (
-              <PreviewImage
+              <PhotoEditor
                 key={file.id}
                 path={file.path}
                 active={item === selected}
